@@ -41,7 +41,7 @@ def get_horoscope():
         }
 
         payload = {
-            "model": "deepseek/deepseek-chat-v3.1:free",  # Safe default, supported by all accounts
+            "model": "openai/gpt-3.5-turbo",  # Safe default, supported by all accounts
             "messages": [
                 {
                     "role": "user",
