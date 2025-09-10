@@ -6,7 +6,7 @@ import random
 app = Flask(__name__)
 
 # OpenRouter API configuration
-OPENROUTER_API_KEY = "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"
+OPENROUTER_API_KEY = "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"
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 # Zodiac signs data
