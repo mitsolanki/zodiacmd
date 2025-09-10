@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 
 # OpenRouter API configuration - Use environment variable for security
-OPENROUTER_API_KEY = os.environ.get('OPENROUTER_API_KEY', "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")
+OPENROUTER_API_KEY = os.environ.get('OPENROUTER_API_KEY', "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")
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 # Zodiac signs data
