@@ -50,11 +50,12 @@ def get_horoscope():
         
         # Make request to OpenRouter API
         headers = {
-            "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-            "Content-Type": "application/json",
-            "HTTP-Referer": "https://zodiacmd.onrender.com",
-            "X-Title": "AI Horoscope Generator"
-        }
+    "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+    "Content-Type": "application/json",
+    "Referer": "https://zodiacmd.onrender.com",  # Corrected key
+    "X-Title": "AI Horoscope Generator"
+}
+
         
         payload = {
             "model": "deepseek/deepseek-chat-v3.1:free",
