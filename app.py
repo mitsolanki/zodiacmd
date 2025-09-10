@@ -11,54 +11,37 @@ OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 # Zodiac signs data
 ZODIAC_SIGNS = {
-    "aries": "♈ Aries",
-    "taurus": "♉ Taurus", 
-    "gemini": "♊ Gemini",
-    "cancer": "♋ Cancer",
-    "leo": "♌ Leo",
-    "virgo": "♍ Virgo",
-    "libra": "♎ Libra",
-    "scorpio": "♏ Scorpio",
-    "sagittarius": "♐ Sagittarius",
-    "capricorn": "♑ Capricorn",
-    "aquarius": "♒ Aquarius",
-    "pisces": "♓ Pisces"
+    "aries": "♈ Aries", "taurus": "♉ Taurus", "gemini": "♊ Gemini", "cancer": "♋ Cancer",
+    "leo": "♌ Leo", "virgo": "♍ Virgo", "libra": "♎ Libra", "scorpio": "♏ Scorpio",
+    "sagittarius": "♐ Sagittarius", "capricorn": "♑ Capricorn", "aquarius": "♒ Aquarius", "pisces": "♓ Pisces"
 }
 
-# Lucky colors and moods for extra features
+# Lucky extras
 LUCKY_COLORS = ["Golden", "Silver", "Ruby Red", "Emerald Green", "Sapphire Blue", "Amethyst Purple", "Rose Gold", "Turquoise", "Coral", "Ivory"]
 MOODS = ["Energetic", "Peaceful", "Confident", "Creative", "Adventurous", "Romantic", "Focused", "Optimistic", "Mysterious", "Cheerful"]
 
 @app.route('/')
 def index():
-    """Serve the homepage"""
     return render_template('index.html')
 
 @app.route('/get_horoscope', methods=['POST'])
 def get_horoscope():
-    """Generate horoscope using OpenRouter AI API"""
     try:
-        # Get zodiac sign from request
         data = request.get_json()
         zodiac_sign = data.get('zodiac_sign', '').lower()
-        
+
         if zodiac_sign not in ZODIAC_SIGNS:
             return jsonify({'error': 'Invalid zodiac sign'}), 400
-        
-        # Prepare the AI prompt
-        prompt = f"Generate a short, positive, and fun horoscope for {ZODIAC_SIGNS[zodiac_sign]} for today. Make it engaging, optimistic, and about 2-3 sentences long. Focus on love, career, health, or general life advice."
-        
-        # Make request to OpenRouter API
-        headers = {
-    "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-    "Content-Type": "application/json",
-    "Referer": "https://zodiacmd.onrender.com",  # Corrected key
-    "X-Title": "AI Horoscope Generator"
-}
 
-        
+        prompt = f"Generate a short, positive, and fun horoscope for {ZODIAC_SIGNS[zodiac_sign]} for today. Make it engaging, optimistic, and about 2-3 sentences long. Focus on love, career, health, or general life advice."
+
+        headers = {
+            "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+            "Content-Type": "application/json"
+        }
+
         payload = {
-            "model": "deepseek/deepseek-chat-v3.1:free",
+            "model": "deepseek/deepseek-chat-v3.1:free",  # Safe default, supported by all accounts
             "messages": [
                 {
                     "role": "user",
@@ -66,18 +49,18 @@ def get_horoscope():
                 }
             ]
         }
-        
+
         response = requests.post(OPENROUTER_URL, headers=headers, json=payload, timeout=30)
         response.raise_for_status()
-        
+
         ai_response = response.json()
         horoscope_text = ai_response['choices'][0]['message']['content']
-        
-        # Generate additional fun features
+
+        # Fun extras
         lucky_number = random.randint(1, 99)
         lucky_color = random.choice(LUCKY_COLORS)
         mood = random.choice(MOODS)
-        
+
         return jsonify({
             'success': True,
             'zodiac_sign': ZODIAC_SIGNS[zodiac_sign],
@@ -86,7 +69,7 @@ def get_horoscope():
             'lucky_color': lucky_color,
             'mood': mood
         })
-        
+
     except requests.exceptions.RequestException as e:
         return jsonify({'error': f'API request failed: {str(e)}'}), 500
     except KeyError as e:
