@@ -2,11 +2,12 @@ from flask import Flask, render_template, request, jsonify
 import requests
 import json
 import random
+import os
 
 app = Flask(__name__)
 
-# OpenRouter API configuration
-OPENROUTER_API_KEY = "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"
+# OpenRouter API configuration - Use environment variable for security
+OPENROUTER_API_KEY = os.environ.get('OPENROUTER_API_KEY', "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")
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 # Zodiac signs data
@@ -24,6 +25,10 @@ MOODS = ["Energetic", "Peaceful", "Confident", "Creative", "Adventurous", "Roman
 def index():
     return render_template('index.html')
 
+@app.route('/favicon.ico')
+def favicon():
+    return app.send_static_file('favicon.ico')
+
 @app.route('/get_horoscope', methods=['POST'])
 def get_horoscope():
     try:
@@ -37,17 +42,20 @@ def get_horoscope():
 
         headers = {
             "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "HTTP-Referer": request.host_url,  # Required by OpenRouter
+            "X-Title": "Horoscope App"  # Required by OpenRouter
         }
 
         payload = {
-            "model": "deepseek/deepseek-chat-v3.1:free",  # Safe default, supported by all accounts
+            "model": "openai/gpt-oss-120b:free",
             "messages": [
                 {
                     "role": "user",
                     "content": prompt
                 }
-            ]
+            ],
+            "max_tokens": 150
         }
 
         response = requests.post(OPENROUTER_URL, headers=headers, json=payload, timeout=30)
@@ -71,7 +79,11 @@ def get_horoscope():
         })
 
     except requests.exceptions.RequestException as e:
-        return jsonify({'error': f'API request failed: {str(e)}'}), 500
+        # More detailed error handling
+        error_msg = f'API request failed: {str(e)}'
+        if hasattr(e.response, 'text'):
+            error_msg += f" - Response: {e.response.text}"
+        return jsonify({'error': error_msg}), 500
     except KeyError as e:
         return jsonify({'error': f'API response format error: {str(e)}'}), 500
     except Exception as e:
