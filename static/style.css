@@ -1,0 +1,552 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Root Variables for Theme */
+:root {
+    --primary-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-bg: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.8);
+    --accent-color: #ffd700;
+    --hover-glow: rgba(255, 215, 0, 0.3);
+}
+
+[data-theme="light"] {
+    --primary-bg: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    --secondary-bg: linear-gradient(135deg, #f8bbd9 0%, #e91e63 100%);
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --text-primary: #1a1a1a;
+    --text-secondary: rgba(0, 0, 0, 0.7);
+    --accent-color: #ff6b35;
+    --hover-glow: rgba(255, 107, 53, 0.3);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Animated Star Background */
+.stars, .stars2, .stars3 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120%;
+    animation: move-twink-back 200s linear infinite;
+    z-index: -1;
+}
+
+.stars {
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, var(--accent-color), transparent),
+        radial-gradient(2px 2px at 40px 70px, white, transparent),
+        radial-gradient(1px 1px at 90px 40px, white, transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: move-stars 200s linear infinite;
+}
+
+.stars2 {
+    background-image: 
+        radial-gradient(1px 1px at 40px 30px, white, transparent),
+        radial-gradient(1px 1px at 30px 80px, var(--accent-color), transparent),
+        radial-gradient(2px 2px at 160px 30px, white, transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: move-stars 100s linear infinite;
+}
+
+.stars3 {
+    background-image: 
+        radial-gradient(1px 1px at 10px 10px, white, transparent),
+        radial-gradient(2px 2px at 150px 150px, var(--accent-color), transparent);
+    background-repeat: repeat;
+    background-size: 300px 300px;
+    animation: move-stars 150s linear infinite;
+}
+
+@keyframes move-stars {
+    from { transform: translateY(0px); }
+    to { transform: translateY(-2000px); }
+}
+
+/* Container and Layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Header Styles */
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 25px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    animation: fadeInUp 1s ease-out;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 20px var(--hover-glow);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.title i {
+    color: var(--accent-color);
+    margin: 0 15px;
+    animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 20px var(--hover-glow); }
+    to { text-shadow: 0 0 30px var(--accent-color), 0 0 40px var(--accent-color); }
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.theme-btn {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px var(--hover-glow);
+}
+
+/* Zodiac Container */
+.zodiac-container {
+    margin-bottom: 3rem;
+    animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+}
+
+/* Zodiac Grid */
+.zodiac-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.zodiac-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+
+.zodiac-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.zodiac-card:hover::before {
+    left: 100%;
+}
+
+.zodiac-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(31, 38, 135, 0.6);
+    border-color: var(--accent-color);
+    background: var(--secondary-bg);
+}
+
+.zodiac-symbol {
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-color);
+    filter: drop-shadow(0 0 10px var(--hover-glow));
+    transition: all 0.3s ease;
+}
+
+.zodiac-card:hover .zodiac-symbol {
+    transform: scale(1.2) rotate(360deg);
+    color: white;
+}
+
+.zodiac-name {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.zodiac-date {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+}
+
+/* Horoscope Section */
+.horoscope-section {
+    animation: slideUp 0.8s ease-out;
+}
+
+.horoscope-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 25px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+
+.horoscope-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.selected-sign {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    text-shadow: 0 0 10px var(--hover-glow);
+}
+
+.refresh-btn {
+    background: var(--secondary-bg);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.refresh-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.refresh-btn i {
+    transition: transform 0.3s ease;
+}
+
+.refresh-btn:hover i {
+    transform: rotate(180deg);
+}
+
+/* Loading Animation */
+.loading {
+    text-align: center;
+    padding: 3rem;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid var(--glass-border);
+    border-top: 4px solid var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem auto;
+}
+
+.loading-text {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Horoscope Content */
+.horoscope-content {
+    animation: fadeIn 0.8s ease-out;
+}
+
+.horoscope-text h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.typing-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+    min-height: 60px;
+}
+
+/* Extras Grid */
+.extras-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.extra-item {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.extra-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(31, 38, 135, 0.3);
+}
+
+.extra-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.extra-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.extra-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.extra-value {
+    font-size: 1.1rem;
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+/* Error Message */
+.error-message {
+    text-align: center;
+    padding: 2rem;
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    border-radius: 15px;
+    margin: 1rem 0;
+}
+
+.error-message i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 2rem;
+    margin-top: 3rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 25px;
+    color: var(--text-secondary);
+    animation: fadeInUp 1s ease-out 0.4s both;
+}
+
+.footer p {
+    margin-bottom: 0.5rem;
+}
+
+.disclaimer {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.footer i {
+    color: var(--accent-color);
+    margin: 0 5px;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .title {
+        font-size: 2rem;
+    }
+    
+    .zodiac-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+    
+    .zodiac-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .zodiac-symbol {
+        font-size: 3rem;
+    }
+    
+    .horoscope-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .selected-sign {
+        font-size: 2rem;
+    }
+    
+    .extras-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.5rem;
+    }
+    
+    .zodiac-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .zodiac-card {
+        padding: 1rem;
+    }
+    
+    .zodiac-symbol {
+        font-size: 2.5rem;
+    }
+    
+    .horoscope-card {
+        padding: 1.5rem;
+    }
+}
+
+/* Typing Effect */
+.typing-effect {
+    overflow: hidden;
+    border-right: 3px solid var(--accent-color);
+    white-space: nowrap;
+    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--accent-color); }
+}
