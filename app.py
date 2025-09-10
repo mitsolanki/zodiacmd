@@ -6,7 +6,7 @@ import random
 app = Flask(__name__)
 
 # OpenRouter API configuration
-OPENROUTER_API_KEY = "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"
+OPENROUTER_API_KEY = "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"
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 # Zodiac signs data
@@ -52,7 +52,7 @@ def get_horoscope():
         headers = {
             "Authorization": f"Bearer {OPENROUTER_API_KEY}",
             "Content-Type": "application/json",
-            "HTTP-Referer": "http://localhost:5000",
+            "HTTP-Referer": "https://zodiacmd.onrender.com",
             "X-Title": "AI Horoscope Generator"
         }
         
