@@ -67,7 +67,7 @@ def get_horoscope():
         headers = {
             "Authorization": f"Bearer {OPENROUTER_API_KEY}",
             "Content-Type": "application/json",
-            "HTTP-Referer": "https://your-app.onrender.com",  # replace with your Render URL
+            "HTTP-Referer": "https://zodiacmd.onrender.com",  # replace with your Render URL
             "X-Title": "Horoscope App"
         }
 
